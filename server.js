@@ -9,6 +9,10 @@ const errorHandler = require('./middleware/error');
 const colors = require('colors');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
+const xss = require('xss-clean');
+const hpp = require('hpp');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 //Load env vars
 dotenv.config({ path: './config/config.env' });
@@ -42,9 +46,18 @@ app.use(fileupload());
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 1,
+});
+
 //sanitize
 app.use(mongoSanitize());
 app.use(helmet());
+app.use(xss());
+app.use(hpp());
+app.use(cors());
+app.use(limiter);
 
 //Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
