@@ -39,5 +39,4 @@ node seeder -i
 Extensive documentation with examples [here](https://documenter.getpostman.com/view/23049881/VUxVrQG7)
 
 - Version: 1.0.0
-- License: MIT
-- Author: Brad Traversy
+- Author: Aayush Yamdagni
